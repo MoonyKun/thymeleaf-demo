@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.moonykun.demo.mapper.DeptMapper">
+
+    <resultMap id="BaseResultMap" type="com.moonykun.demo.domain.Dept">
+            <id property="deptId" column="dept_id" jdbcType="INTEGER"/>
+            <result property="deptName" column="dept_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        dept_id,dept_name
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from dept
+        where  dept_id = #{deptId,jdbcType=INTEGER} 
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from dept
+        where  dept_id = #{deptId,jdbcType=INTEGER} 
+    </delete>
+    <insert id="insert" keyColumn="dept_id" keyProperty="deptId" parameterType="com.moonykun.demo.domain.Dept" useGeneratedKeys="true">
+        insert into dept
+        ( dept_id,dept_name)
+        values (#{deptId,jdbcType=INTEGER},#{deptName,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" keyColumn="dept_id" keyProperty="deptId" parameterType="com.moonykun.demo.domain.Dept" useGeneratedKeys="true">
+        insert into dept
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="deptId != null">dept_id,</if>
+                <if test="deptName != null">dept_name,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="deptId != null">#{deptId,jdbcType=INTEGER},</if>
+                <if test="deptName != null">#{deptName,jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.moonykun.demo.domain.Dept">
+        update dept
+        <set>
+                <if test="deptName != null">
+                    dept_name = #{deptName,jdbcType=VARCHAR},
+                </if>
+        </set>
+        where   dept_id = #{deptId,jdbcType=INTEGER} 
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.moonykun.demo.domain.Dept">
+        update dept
+        set 
+            dept_name =  #{deptName,jdbcType=VARCHAR}
+        where   dept_id = #{deptId,jdbcType=INTEGER} 
+    </update>
+</mapper>
