@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 /**
  * 
+ * @author Moonykun
  * @TableName dept
  */
 @Data

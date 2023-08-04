@@ -22,6 +22,9 @@
         from user
         where  id = #{id,jdbcType=INTEGER} 
     </select>
+    <select id="getUser" resultType="com.moonykun.demo.domain.User" parameterType="com.moonykun.demo.domain.User">
+        select * from user where username=#{username}
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from user

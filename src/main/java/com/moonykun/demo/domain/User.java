@@ -1,10 +1,13 @@
 package com.moonykun.demo.domain;
 
-import java.io.Serializable;
 import lombok.Data;
+
+
+import java.io.Serializable;
 
 /**
  * 
+ * @author Moonykun
  * @TableName user
  */
 @Data
@@ -28,6 +31,7 @@ public class User implements Serializable {
      * 
      */
     private String chName;
+
 
     private static final long serialVersionUID = 1L;
 }
