@@ -34,7 +34,7 @@
         <div class="layui-form login-form">
             <form class="layui-form" action="">
                 <div class="layui-form-item logo-title">
-                    <h1>Moonykun登录</h1>
+                    <h1>Moonykun</h1>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-username" for="username"></label>
@@ -48,14 +48,14 @@
                     <label class="layui-icon layui-icon-vercode" for="captcha"></label>
                     <input type="text" name="captcha" lay-verify="required|captcha" placeholder="图形验证码" autocomplete="off" class="layui-input verification captcha" value="xszg">
                     <div class="captcha-img">
-                        <img id="captchaPic" src="../images/captcha.jpg">
+                        <img id="captchaPic" th:src="@{/captcha}">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <input type="checkbox" name="rememberMe" value="true" lay-skin="primary" title="记住密码">
                 </div>
                 <div class="layui-form-item">
-                    <button class="layui-btn layui-btn layui-btn-normal layui-btn-fluid" lay-submit="" lay-filter="login">登 入</button>
+                    <button class="layui-btn layui-btn layui-btn-normal layui-btn-fluid" lay-submit="" lay-filter="login" id = "login-btn">登 入</button>
                 </div>
             </form>
         </div>
@@ -64,7 +64,15 @@
 <script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}" charset="utf-8"></script>
 <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
 <script th:src="@{/lib/jq-module/jquery.particleground.min.js}" charset="utf-8"></script>
-<script>
+<script th:inline="javascript" >
+    // 防止改变springboot配置文件后路径需要进一步修改
+    var ctxPath = [[@{/}]];
+
+    // 点击验证码后刷新验证码
+    $("#captchaPic").click(function () {
+        $("#captchaPic").attr("src",ctxPath + 'captcha?date=' + new Date().getTime());
+    });
+
     layui.use(['form'], function () {
         var form = layui.form,
             layer = layui.layer;
@@ -82,6 +90,9 @@
 
         // 进行登录操作
         form.on('submit(login)', function (data) {
+            // 在点击登录后置灰不可用
+            $("#login-btn").attr("disabled","disabled").addClass("layui-btn-disabled");
+
             data = data.field;
             if (data.username == '') {
                 layer.msg('用户名不能为空');
@@ -96,15 +107,17 @@
                 return false;
             }
             // 异步登录请求
-            const url = "/user/login";
+            const url = ctxPath + "user/login";
             $.post(url,data,function (response) {
                 console.log(response);
                 if (response.code === 0) {
-                    layer.msg('登录成功',{anim: 6,icon: 6},function (){
-                        window.location = '/index';
+                    layer.msg('登录成功',{anim: 6,icon: 6,time: 2000},function (){
+                        window.location = ctxPath + 'index';
                     });
                 }else {
                     layer.msg('登录失败',{icon:5});
+                    $("#captchaPic").attr("src",ctxPath + 'captcha?date=' + new Date().getTime());
+                    $("#login-btn").removeAttr("disabled","disabled").removeClass("layui-btn-disabled");
                 }
             })
             return false;

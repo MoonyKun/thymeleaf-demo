@@ -3,13 +3,16 @@ package com.moonykun.demo.controller;
 import com.moonykun.demo.domain.User;
 import com.moonykun.demo.service.UserService;
 import com.moonykun.demo.vo.Result;
+import com.wf.captcha.utils.CaptchaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
@@ -24,9 +27,14 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/login")
-    public Result login(User param, HttpSession httpSession) {
+    public Result login(User param, @RequestParam("captcha") String verCode, HttpServletRequest request, HttpSession httpSession) {
         User user = userService.login(param);
-      // 首先判断是否找到user
+        // 校验验证码
+        if (!CaptchaUtil.ver(verCode, request)) {
+            CaptchaUtil.clear(request);  // 清除session中的验证码并非刷新验证码
+            return Result.fail("验证码错误");
+        }
+       // 首先判断是否找到user
         if (user != null) {
             // 初始化加密工具类
             BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();

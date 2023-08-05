@@ -1,7 +1,8 @@
 # 端口、数据源、thymeleaf、mybatis、表单转换
 server:
   port: 8080
-
+  servlet:
+    context-path: /moonykun/
 spring:
   datasource:
     username: root
