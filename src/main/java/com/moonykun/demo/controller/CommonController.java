@@ -19,11 +19,15 @@ public class CommonController {
     }
 
     @GetMapping("/index")
-   public String index() {
+    public String index() {
         return "index";
    }
     @RequestMapping("/captcha")
     public void captcha(HttpServletRequest request, HttpServletResponse response) throws Exception {
         CaptchaUtil.out(request, response);
+    }
+    @GetMapping("/welcome")
+    public String welcome() {
+        return "welcome";
     }
 }

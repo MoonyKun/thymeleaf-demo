@@ -6,7 +6,6 @@ import com.moonykun.demo.vo.Result;
 import com.wf.captcha.utils.CaptchaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +18,6 @@ import javax.servlet.http.HttpSession;
 /**
  * @author Moonykun
  */
-@Controller
 @RestController
 @RequestMapping("/user")
 public class UserController {
