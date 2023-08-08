@@ -16,8 +16,8 @@
       "target": "_self",
       "child": [
         {
-          "title": "菜单管理",
-          "href": "page/menu.html",
+          "title": "员工管理",
+          "href": "emp",
           "icon": "fa fa-window-maximize",
           "target": "_self"
         },
@@ -28,8 +28,8 @@
           "target": "_self"
         },
         {
-          "title": "表格示例",
-          "href": "page/table.html",
+          "title": "接口文档",
+          "href": "swagger-ui.html",
           "icon": "fa fa-file-text",
           "target": "_self"
         },

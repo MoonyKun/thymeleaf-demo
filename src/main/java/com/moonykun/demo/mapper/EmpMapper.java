@@ -1,6 +1,9 @@
 package com.moonykun.demo.mapper;
 
 import com.moonykun.demo.domain.Emp;
+import com.moonykun.demo.vo.EmpQuery;
+
+import java.util.List;
 
 /**
 * @author Moonykun
@@ -22,4 +25,7 @@ public interface EmpMapper {
 
     int updateByPrimaryKey(Emp record);
 
+    List<Emp> listAllByEmpQuery(EmpQuery empQuery);
+
+    Long countByEmpQuery(EmpQuery empQuery);
 }

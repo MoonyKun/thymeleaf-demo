@@ -27,6 +27,16 @@
         from emp
         where  emp_id = #{empId,jdbcType=INTEGER} AND birthday = #{birthday,jdbcType=DATE} 
     </select>
+    <select id="listAllByEmpQuery" resultType="com.moonykun.demo.domain.Emp" parameterType="com.moonykun.demo.vo.EmpQuery">
+        select * from emp a
+        <include refid="getEmpListWhere"></include>
+        limit #{start},#{limit}
+    </select>
+
+    <select id="countByEmpQuery" resultType="java.lang.Long" parameterType="com.moonykun.demo.vo.EmpQuery">
+        select count(1) from emp a
+        <include refid="getEmpListWhere"></include>
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from emp
@@ -99,4 +109,23 @@
             dept_id =  #{deptId,jdbcType=INTEGER}
         where   emp_id = #{empId,jdbcType=INTEGER} AND birthday = #{birthday,jdbcType=DATE} 
     </update>
+
+    <sql id="getEmpListWhere">
+        <where>
+            <if test="name != null">
+                a.name like '%' #{name} '%'
+            </if>
+            <if test="startDate != null">
+                <![CDATA[
+                and a.birthday >= #{startDate}
+                ]]>
+            </if>
+            <if test="endDate != null">
+                <![CDATA[
+                and a.birthday <= #{endDate}
+                ]]>
+            </if>
+        </where>
+    </sql>
+
 </mapper>

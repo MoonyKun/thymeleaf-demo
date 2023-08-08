@@ -20,12 +20,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         if (userInfo == null) {
             // 重定向
-            response.sendRedirect(request.getContextPath() + "login");
+            response.sendRedirect(request.getContextPath() + "/login");
             // 返回false
-            log.debug("无效登录请求："+request.getSession());
+            log.debug("无效请求："+request.getRequestURI());
             return false;
         }
-        log.info("有效登录请求："+request.getSession());
+        log.info("有效请求："+request.getRequestURI());
         return true;
     }
 }

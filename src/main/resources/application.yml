@@ -20,6 +20,7 @@ spring:
   jackson:
     date-format: yyyy-MM-dd
     time-zone: GMT+8
+
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.moonykun.demo.domain
@@ -28,4 +29,4 @@ mybatis:
 
 logging:
   level:
-    cn.qqcn: debug
+    com.moonykun: debug

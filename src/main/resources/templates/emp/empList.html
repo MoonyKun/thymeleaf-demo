@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>员工列表</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/layuimini.css?v=2.0.4.2}" media="all">
+    <link rel="stylesheet" th:href="@{/css/themes/default.css}" media="all">
+    <link rel="stylesheet" th:href="@{lib/font-awesome-4.7.0/css/font-awesome.min.css}" media="all">
+
+    <style>
+        .div-content {
+            background-color: white;
+            border-radius: 5px;
+            padding: 15px;
+        }
+
+        .table-search-fieldset {
+            margin: 0;
+            border: 1px solid #e6e6e6;
+            padding: 10px 20px 5px 20px;
+            color: #6b6b6b;
+        }
+
+    </style>
+
+</head>
+<body>
+<div class="div-content">
+    <fieldset class="table-search-fieldset">
+        <legend>搜索条件</legend>
+        <div style="margin: 10px 10px 10px 10px">
+            <form class="layui-form layui-form-pane" action="">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">用户姓名</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="username" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">生日</label>
+                        <div class="layui-input-inline" style="width: 120px;">
+                            <input type="text" name="startDate" placeholder="开始日期" autocomplete="off"
+                                   class="layui-input" id="emp-start-date">
+                        </div>
+
+                        <div class="layui-form-mid">-</div>
+
+                        <div class="layui-input-inline" style="width: 120px;">
+                            <input type="text" name="endDate" placeholder="结束日期" autocomplete="off"
+                                   class="layui-input" id="emp-end-date">
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <button type="submit" class="layui-btn layui-btn-primary" lay-submit=""
+                                lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </fieldset>
+    <table class="layui-hide" id="ID-table-demo-page"></table>
+</div>
+
+<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+<script th:inline="javascript">
+
+    layui.use('table',function () {
+        var laydate = layui.laydate;
+
+        var table = layui.table;
+
+        var ctxPath = [[@{/}]];
+        // 批量渲染
+        laydate.render({
+            elem: '#emp-start-date'
+        });
+
+        laydate.render({
+            elem: '#emp-end-date'
+        });
+
+        // 创建渲染实例
+        table.render({
+            elem: '#ID-table-demo-page'
+            ,limits: [5,10,15,20,25,30]
+            ,url: ctxPath + 'emp/list' // 此处为静态模拟数据，实际使用时需换成真实接口
+            ,page: { // 支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                //,curr: 5 //设定初始在第 5 页
+                ,groups: 1 //只显示 1 个连续页码
+                ,first: false //不显示首页
+                ,last: false //不显示尾页
+            }
+            ,pagebar: '#ID-table-demo-page-pagebar' // 分页栏模板
+            ,cols: [ [
+                {field:'empId', width:140, title: '员工编号', sort: true,align: 'center'}
+                ,{field:'name', width:180, title: '员工姓名',align: 'center'}
+                ,{field:'sex', width:80, title: '性别', sort: true,align: 'center'}
+                ,{field:'age', width:80, title: '年龄'}
+                ,{field:'birthday', width:180, title: '生日'}
+                ,{field:'sal', width:80, title: '工资', sort: true}
+                ,{field:'deptId', width:120, title: '部门编号',align: 'center'}
+                ,{field:'address', title: '地址', minWidth: 150}
+                ,{title: '操作', width: 150}
+            ] ]
+        });
+
+    });
+</script>
+</body>
+</html>
