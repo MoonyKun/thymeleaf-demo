@@ -34,7 +34,8 @@ public class MyWebConfig implements WebMvcConfigurer {
                 "/js/**",
                 "/images/**",
                 "/index",
-                "/null/swagger-resources");
+                "/null/swagger-resources",
+                "/favicon.ico");
         WebMvcConfigurer.super.addInterceptors(registry);
     }
 }
