@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <title>首页</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/layuimini.css?v=2.0.4.2}" media="all">
+    <link rel="stylesheet" th:href="@{/css/themes/default.css}" media="all">
+    <link rel="stylesheet" th:href="@{lib/font-awesome-4.7.0/css/font-awesome.min.css}" media="all">
+
+    <style>
+        .user-div {
+            background-color: white;
+            border-radius: 5px;
+            padding: 15px;
+        }
+
+        .table-search-fieldset {
+            margin: 0;
+            border: 1px solid #e6e6e6;
+            padding: 10px 20px 5px 20px;
+            color: #6b6b6b;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="user-div">
+        <fieldset class="table-search-fieldset">
+            <legend>搜索</legend>
+            <div style="margin: 10px 10px 10px 10px">
+                <form class="layui-form layui-form-pane" action="">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">用户姓名</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="username" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">用户职业</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="classify" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button type="submit" class="layui-btn layui-btn-primary" lay-submit="" lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+        <table class="layui-hide" id="ID-table-demo-page"></table>
+    </div>
+</body>
+<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+<script th:inline="javascript">
+
+    layui.use('table', function(){
+        var ctxPath = [[@{/}]];
+
+        var table = layui.table;
+
+        var form = layui.form;
+
+        // 创建渲染实例
+        table.render({
+            elem: '#ID-table-demo-page'
+            ,url: ctxPath+'user/list' // 此处为静态模拟数据，实际使用时需换成真实接口
+            ,limits: [1,3,5,7,9]
+            ,page: { // 支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+                //,curr: 5 //设定初始在第 5 页
+                ,groups: 1 //只显示 1 个连续页码
+                ,first: false //不显示首页
+                ,last: false //不显示尾页
+            }
+            ,pagebar: '#ID-table-demo-page-pagebar' // 分页栏模板
+            ,cols: [ [
+                {field:'id', width:80, title: 'ID', sort: true}
+                ,{field:'username', width:180, title: '用户名'}
+                ,{field:'chName', width:80, title: '中文名'}
+                ,{title: '操作', minWidth: 80}
+            ] ]
+        });
+
+        form.on('submit(data-search-btn)', function(data){
+            var field = data.field; // 获取表单全部字段值
+            var elem = data.elem; // 获取当前触发事件的元素 DOM 对象，一般为 button 标签
+            var elemForm = data.form; // 获取当前表单域的 form 元素对象，若容器为 form 标签才会返回。
+            console.log(field);
+            table.reload('ID-table-demo-page', {
+                where: { // 传递数据异步请求时携带的字段
+                    name: data.field.username,
+                    chName: data.field.classify
+                    //…
+                },
+            });
+            // 此处可执行 Ajax 等操作
+            // …
+            return false; // 阻止默认 form 跳转
+        });
+
+    });
+</script>
+</html>

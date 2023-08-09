@@ -32,6 +32,5 @@ public class User implements Serializable {
      */
     private String chName;
 
-
     private static final long serialVersionUID = 1L;
 }

@@ -55,7 +55,7 @@
                     </div>
 
                     <div class="layui-inline">
-                        <button type="submit" class="layui-btn layui-btn-primary" lay-submit=""
+                        <button  type="submit" class="layui-btn layui-btn-primary" lay-submit=""
                                 lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索
                         </button>
                     </div>
@@ -64,8 +64,34 @@
             </form>
         </div>
     </fieldset>
-    <table class="layui-hide" id="ID-table-demo-page"></table>
+    <table class="layui-hide" id="ID-table-demo-page" lay-filter="table-emp-filter"></table>
 </div>
+
+<script type="text/html" id="convertSex">
+    {{#
+        if(d.sex == 'M'){
+             return '男';
+        }else if(d.sex == 'F'){
+            return '女';
+        }else{
+            return '妖'
+        }
+    }}
+</script>
+
+<script type="text/html" id="convertDept">
+    {{#
+        return d.dept.deptName
+    }}
+</script>
+
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+        <button class="layui-btn layui-btn-sm" lay-event="update">编辑</button>
+        <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete">删除</button>
+    </div>
+</script>
 
 <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
 <script th:inline="javascript">
@@ -75,8 +101,11 @@
 
         var table = layui.table;
 
+        var form = layui.form;
+
+
         var ctxPath = [[@{/}]];
-        // 批量渲染
+        // 批量日期渲染
         laydate.render({
             elem: '#emp-start-date'
         });
@@ -90,6 +119,7 @@
             elem: '#ID-table-demo-page'
             ,limits: [5,10,15,20,25,30]
             ,url: ctxPath + 'emp/list' // 此处为静态模拟数据，实际使用时需换成真实接口
+            ,toolbar: '#toolbarDemo'
             ,page: { // 支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
                 layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
                 //,curr: 5 //设定初始在第 5 页
@@ -101,14 +131,56 @@
             ,cols: [ [
                 {field:'empId', width:140, title: '员工编号', sort: true,align: 'center'}
                 ,{field:'name', width:180, title: '员工姓名',align: 'center'}
-                ,{field:'sex', width:80, title: '性别', sort: true,align: 'center'}
+                ,{field:'sex', width:80, title: '性别', sort: true,align: 'center',templet: '#convertSex'}
                 ,{field:'age', width:80, title: '年龄'}
                 ,{field:'birthday', width:180, title: '生日'}
                 ,{field:'sal', width:80, title: '工资', sort: true}
-                ,{field:'deptId', width:120, title: '部门编号',align: 'center'}
+                ,{field:'deptId', width:120, title: '部门编号',align: 'center',templet: '#convertDept'}
                 ,{field:'address', title: '地址', minWidth: 150}
                 ,{title: '操作', width: 80,align: 'center'}
             ] ]
+        });
+        // 搜索功能实现
+        form.on('submit(data-search-btn)', function(data){
+            var field = data.field; // 获取表单全部字段值
+            //var elem = data.elem; // 获取当前触发事件的元素 DOM 对象，一般为 button 标签
+            //var elemForm = data.form; // 获取当前表单域的 form 元素对象，若容器为 form 标签才会返回。
+            console.log(field)
+            table.reload('ID-table-demo-page', {
+                where: { // 传递数据异步请求时携带的字段
+                    name: data.field.username,
+                    startDate: data.field.startDate,
+                    endDate: data.field.endDate
+                    //…
+                }
+            });
+            return false; // 阻止默认 form 跳转
+        });
+        // 增删查改
+        table.on('toolbar(table-emp-filter)', function(obj){
+            var options = obj.config; // 获取当前表格属性配置项
+            var checkStatus = table.checkStatus(options.id); // 获取选中行相关数据
+            console.log(obj); // 查看对象所有成员
+
+            // 根据不同的事件名进行相应的操作
+            switch(obj.event){ // 对应模板元素中的 lay-event 属性值
+                case 'add':
+                    layer.open({
+                        type: 2,
+                        title: '新增员工',
+                        shadeClose: true,
+                        shade: 0.4,
+                        area: ['50%', '80%'],
+                        content: '/layer/test/1.html' // iframe 的 url
+                    });
+                    break;
+                case 'delete':
+                    layer.alert("删除");
+                    break;
+                case 'update':
+                    layer.alert("更新");
+                    break;
+            };
         });
 
     });

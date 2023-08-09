@@ -25,6 +25,16 @@
     <select id="getUser" resultType="com.moonykun.demo.domain.User" parameterType="com.moonykun.demo.domain.User">
         select * from user where username=#{username}
     </select>
+    <select id="getAllByUSerQuery" resultType="com.moonykun.demo.domain.User" parameterType="com.moonykun.demo.vo.UserQuery">
+        select * from user
+        <include refid="getUserListWhere"></include>
+        limit #{start},#{limit}
+    </select>
+
+    <select id="countByUserQuery" resultType="java.lang.Long" parameterType="com.moonykun.demo.vo.UserQuery">
+        select count(1) from user
+        <include refid="getUserListWhere"></include>
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from user
@@ -75,4 +85,15 @@
             ch_name =  #{chName,jdbcType=VARCHAR}
         where   id = #{id,jdbcType=INTEGER} 
     </update>
+
+    <sql id="getUserListWhere">
+        <where>
+            <if test="name != null">
+                username like '%' #{name} '%'
+            </if>
+            <if test="chName != null">
+                and ch_Name like '%' #{chName} '%'
+            </if>
+        </where>
+    </sql>
 </mapper>

@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>首页</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+
+<script th:src="@{/layui/layui.js}" charset="utf-8"></script>
+
+<script th:inline="javascript">
+
+    layui.use('table',function () {
+        var laydate = layui.laydate;
+
+        var table = layui.table;
+
+        var form = layui.form;
+
+
+        var ctxPath = [[@{/}]];
+
+</script>
+</body>
+</html>

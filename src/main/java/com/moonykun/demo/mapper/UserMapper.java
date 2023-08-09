@@ -1,6 +1,9 @@
 package com.moonykun.demo.mapper;
 
 import com.moonykun.demo.domain.User;
+import com.moonykun.demo.vo.UserQuery;
+
+import java.util.List;
 
 /**
 * @author Moonykun
@@ -23,5 +26,9 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     User getUser(User user);
+
+    List<User> getAllByUSerQuery(UserQuery userQuery);
+
+    Long countByUserQuery(UserQuery userQuery);
 
 }

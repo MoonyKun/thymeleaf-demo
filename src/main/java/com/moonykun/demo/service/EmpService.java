@@ -9,4 +9,6 @@ public interface EmpService {
     List<Emp> listEmp(EmpQuery empQuery);
 
     Long countEmp(EmpQuery empQuery);
+
+    void addEmp(Emp emp);
 }

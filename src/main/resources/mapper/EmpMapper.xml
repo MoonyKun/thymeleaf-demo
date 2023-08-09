@@ -13,6 +13,10 @@
             <result property="sal" column="sal" jdbcType="DECIMAL"/>
             <result property="address" column="address" jdbcType="VARCHAR"/>
             <result property="deptId" column="dept_id" jdbcType="INTEGER"/>
+            <association property="dept" javaType="com.moonykun.demo.domain.Dept">
+                <id property="deptId" column="dept_id" jdbcType="INTEGER"/>
+                <result property="deptName" column="dept_name" jdbcType="VARCHAR"/>
+            </association>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -27,8 +31,9 @@
         from emp
         where  emp_id = #{empId,jdbcType=INTEGER} AND birthday = #{birthday,jdbcType=DATE} 
     </select>
-    <select id="listAllByEmpQuery" resultType="com.moonykun.demo.domain.Emp" parameterType="com.moonykun.demo.vo.EmpQuery">
-        select * from emp a
+
+    <select id="listAllByEmpQuery" resultType="com.moonykun.demo.domain.Emp" resultMap="BaseResultMap">
+        select * from emp a left join dept b on a.dept_id = b.dept_id
         <include refid="getEmpListWhere"></include>
         limit #{start},#{limit}
     </select>

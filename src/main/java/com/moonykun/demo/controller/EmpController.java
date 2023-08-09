@@ -8,6 +8,7 @@ import com.moonykun.demo.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -29,5 +30,11 @@ public class EmpController {
         List<Emp> emps = empService.listEmp(empQuery);
         Long count =empService.countEmp(empQuery);
         return Result.success(emps,count);
+    }
+
+    @PostMapping("")
+    public Result<Object> addEmp(Emp emp) {
+        empService.addEmp(emp);
+        return Result.success("新增成功");
     }
 }

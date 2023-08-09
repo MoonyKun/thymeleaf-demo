@@ -3,27 +3,28 @@ package com.moonykun.demo.controller;
 import com.moonykun.demo.domain.User;
 import com.moonykun.demo.service.UserService;
 import com.moonykun.demo.vo.Result;
+import com.moonykun.demo.vo.UserQuery;
 import com.wf.captcha.utils.CaptchaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 /**
  * @author Moonykun
  */
-@RestController
+@Controller
 @RequestMapping("/user")
 public class UserController {
     @Autowired
     UserService userService;
 
+    @ResponseBody
     @PostMapping("/login")
     public Result login(User param, @RequestParam("captcha") String verCode, HttpServletRequest request, HttpSession httpSession) {
         User user = userService.login(param);
@@ -45,5 +46,17 @@ public class UserController {
             }
         }
         return Result.fail("用户名或密码错误");
+    }
+    @GetMapping("")
+    public String user() {
+        return "user/userList";
+    }
+
+    @ResponseBody
+    @GetMapping("/list")
+    public Result<Object> listUser(UserQuery userQuery) {
+        List<User> userList = userService.listUser(userQuery);
+        Long userCount = userService.countUser(userQuery);
+        return Result.success(userList,userCount);
     }
 }
