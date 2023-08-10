@@ -2,6 +2,8 @@ package com.moonykun.demo.mapper;
 
 import com.moonykun.demo.domain.Dept;
 
+import java.util.List;
+
 /**
 * @author Moonykun
 * @description 针对表【dept】的数据库操作Mapper
@@ -22,4 +24,5 @@ public interface DeptMapper {
 
     int updateByPrimaryKey(Dept record);
 
+    List<Dept> getAll();
 }

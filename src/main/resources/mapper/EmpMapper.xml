@@ -29,12 +29,13 @@
         select
         <include refid="Base_Column_List" />
         from emp
-        where  emp_id = #{empId,jdbcType=INTEGER} AND birthday = #{birthday,jdbcType=DATE} 
+        where  emp_id = #{id,jdbcType=INTEGER}
     </select>
 
     <select id="listAllByEmpQuery" resultType="com.moonykun.demo.domain.Emp" resultMap="BaseResultMap">
         select * from emp a left join dept b on a.dept_id = b.dept_id
         <include refid="getEmpListWhere"></include>
+        order by a.emp_id desc
         limit #{start},#{limit}
     </select>
 
@@ -46,6 +47,9 @@
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from emp
         where  emp_id = #{empId,jdbcType=INTEGER} AND birthday = #{birthday,jdbcType=DATE} 
+    </delete>
+    <delete id="deleteEmp" parameterType="String">
+        delete from emp where emp_id in (${ids})
     </delete>
     <insert id="insert">
         insert into emp
@@ -101,7 +105,7 @@
                     dept_id = #{deptId,jdbcType=INTEGER},
                 </if>
         </set>
-        where   emp_id = #{empId,jdbcType=INTEGER} AND birthday = #{birthday,jdbcType=DATE} 
+        where   emp_id = #{empId,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="com.moonykun.demo.domain.Emp">
         update emp

@@ -19,6 +19,9 @@
         from dept
         where  dept_id = #{deptId,jdbcType=INTEGER} 
     </select>
+    <select id="getAll" resultType="com.moonykun.demo.domain.Dept">
+        select * from dept
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from dept

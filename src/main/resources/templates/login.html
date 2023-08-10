@@ -116,6 +116,7 @@
                     });
                 }else {
                     layer.msg('登录失败',{icon:5});
+                    //?
                     $("#captchaPic").attr("src",ctxPath + 'captcha?date=' + new Date().getTime());
                     $("#login-btn").removeAttr("disabled","disabled").removeClass("layui-btn-disabled");
                 }

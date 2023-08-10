@@ -1,5 +1,6 @@
 package com.moonykun.demo.service;
 
+import com.moonykun.demo.domain.Dept;
 import com.moonykun.demo.domain.Emp;
 import com.moonykun.demo.vo.EmpQuery;
 
@@ -11,4 +12,12 @@ public interface EmpService {
     Long countEmp(EmpQuery empQuery);
 
     void addEmp(Emp emp);
+
+    List<Dept> getDept();
+
+    void deleteEmp(String ids);
+
+    Emp getEmpById(Long id);
+
+    void updateEmp(Emp emp);
 }

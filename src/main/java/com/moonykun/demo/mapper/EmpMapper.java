@@ -28,4 +28,6 @@ public interface EmpMapper {
     List<Emp> listAllByEmpQuery(EmpQuery empQuery);
 
     Long countByEmpQuery(EmpQuery empQuery);
+
+    void deleteEmp(String ids);
 }
