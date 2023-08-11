@@ -17,7 +17,7 @@ public interface EmpService {
 
     void deleteEmp(String ids);
 
-    Emp getEmpById(Long id);
+    Emp getEmpById(Integer id);
 
     void updateEmp(Emp emp);
 }

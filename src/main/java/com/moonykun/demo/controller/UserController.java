@@ -8,6 +8,7 @@ import com.wf.captcha.utils.CaptchaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -58,5 +59,25 @@ public class UserController {
         List<User> userList = userService.listUser(userQuery);
         Long userCount = userService.countUser(userQuery);
         return Result.success(userList,userCount);
+    }
+    @DeleteMapping("/delete/{ids}")
+    @ResponseBody
+    public Result<Object> deleteUser(@PathVariable("ids") String ids) {
+        userService.deleteUserByIds(ids);
+        return Result.success("删除成功");
+    }
+
+    @GetMapping("/{id}")
+    public String getUser(@PathVariable("id") Long id, Model model) {
+        User user = userService.getUserById(id);
+        model.addAttribute("user",user);
+        return "user/userEdit";
+    }
+
+    @PutMapping("/update")
+    @ResponseBody
+    public Result<Object> updateUser(User user) {
+        userService.updateUser(user);
+        return Result.success("修改成功");
     }
 }

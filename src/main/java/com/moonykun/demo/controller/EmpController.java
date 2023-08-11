@@ -53,7 +53,7 @@ public class EmpController {
     }
 
     @GetMapping("/{id}")
-    public String getEmpById(@PathVariable("id") Long id,Model model) {
+    public String getEmpById(@PathVariable("id") Integer id,Model model) {
         Emp emp = empService.getEmpById(id);
         model.addAttribute("emp",emp);
         model.addAttribute("deptList",empService.getDept());

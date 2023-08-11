@@ -31,4 +31,7 @@ public interface UserMapper {
 
     Long countByUserQuery(UserQuery userQuery);
 
+    void deleteByIds(String ids);
+
+    User getUserById(Long id);
 }

@@ -32,4 +32,19 @@ public class UserServiceImpl implements UserService {
     public Long countUser(UserQuery userQuery) {
         return userMapper.countByUserQuery(userQuery);
     }
+
+    @Override
+    public void deleteUserByIds(String ids) {
+        userMapper.deleteByIds(ids);
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        return userMapper.getUserById(id);
+    }
+
+    @Override
+    public void updateUser(User user) {
+        userMapper.updateByPrimaryKeySelective(user);
+    }
 }

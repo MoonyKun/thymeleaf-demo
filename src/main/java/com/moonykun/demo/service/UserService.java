@@ -14,4 +14,10 @@ public interface UserService {
     List<User> listUser(UserQuery userQuery);
 
     Long countUser(UserQuery userQuery);
+
+    void deleteUserByIds(String ids);
+
+    User getUserById(Long id);
+
+    void updateUser(User user);
 }

@@ -35,10 +35,19 @@
         select count(1) from user
         <include refid="getUserListWhere"></include>
     </select>
+    <select id="getUserById" resultType="com.moonykun.demo.domain.User" parameterType="Long">
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where  id = #{id}
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete from user
         where  id = #{id,jdbcType=INTEGER} 
+    </delete>
+    <delete id="deleteByIds" parameterType="String">
+        delete from user where id in (${ids})
     </delete>
     <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.moonykun.demo.domain.User" useGeneratedKeys="true">
         insert into user

@@ -1,5 +1,7 @@
 package com.moonykun.demo.service.impl;
 
+import com.moonykun.demo.Repository.DeptRepository;
+import com.moonykun.demo.Repository.EmpRepository;
 import com.moonykun.demo.domain.Dept;
 import com.moonykun.demo.domain.Emp;
 import com.moonykun.demo.mapper.DeptMapper;
@@ -21,6 +23,13 @@ public class EmpServiceImpl implements EmpService {
     EmpMapper empMapper;
     @Resource
     DeptMapper deptMapper;
+
+    @Resource
+    EmpRepository empRepository;
+
+    @Resource
+    DeptRepository deptRepository;
+
     @Override
     public List<Emp> listEmp(EmpQuery empQuery) {
         return empMapper.listAllByEmpQuery(empQuery);
@@ -33,12 +42,12 @@ public class EmpServiceImpl implements EmpService {
 
     @Override
     public void addEmp(Emp emp) {
-        empMapper.insert(emp);
+        empRepository.save(emp);
     }
 
     @Override
     public List<Dept> getDept() {
-        return deptMapper.getAll();
+        return deptRepository.findAll();
     }
 
     @Override
@@ -47,8 +56,8 @@ public class EmpServiceImpl implements EmpService {
     }
 
     @Override
-    public Emp getEmpById(Long id) {
-        return empMapper.selectByPrimaryKey(id);
+    public Emp getEmpById(Integer id) {
+        return empRepository.findById(id).get();
     }
 
     @Override
