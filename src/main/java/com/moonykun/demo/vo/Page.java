@@ -10,7 +10,7 @@ public class Page implements Serializable {
 
     private Integer limit;
 
-    public Long getStart(){
-        return (page - 1L ) * limit;
+    public Integer getStart(){
+        return (page - 1 ) * limit;
     }
 }

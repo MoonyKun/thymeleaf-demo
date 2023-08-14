@@ -21,6 +21,9 @@ spring:
     date-format: yyyy-MM-dd
     time-zone: GMT+8
 
+  jpa:
+    show-sql: true
+
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.moonykun.demo.domain

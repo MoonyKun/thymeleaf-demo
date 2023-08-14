@@ -1,7 +1,6 @@
 package com.moonykun.demo.domain;
 
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -33,7 +32,6 @@ public class Emp implements Serializable {
     private BigDecimal sal;
 
     @Column(name = "birthday", nullable = false)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
 
     @Column(name = "address")
@@ -42,5 +40,7 @@ public class Emp implements Serializable {
     @Column(name = "dept_id")
     private Integer deptId;
 
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "dept_id",name = "dept_id",insertable = false,updatable = false)
     private Dept dept;
 }
