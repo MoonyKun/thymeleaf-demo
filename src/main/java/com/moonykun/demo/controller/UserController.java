@@ -68,7 +68,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public String getUser(@PathVariable("id") Long id, Model model) {
+    public String getUser(@PathVariable("id") Integer id, Model model) {
         User user = userService.getUserById(id);
         model.addAttribute("user",user);
         return "user/userEdit";

@@ -4,8 +4,6 @@ import com.moonykun.demo.Repository.DeptRepository;
 import com.moonykun.demo.Repository.EmpRepository;
 import com.moonykun.demo.domain.Dept;
 import com.moonykun.demo.domain.Emp;
-import com.moonykun.demo.mapper.DeptMapper;
-import com.moonykun.demo.mapper.EmpMapper;
 import com.moonykun.demo.service.EmpService;
 import com.moonykun.demo.vo.EmpQuery;
 import org.springframework.data.domain.Page;
@@ -28,12 +26,6 @@ import java.util.List;
  */
 @Service
 public class EmpServiceImpl implements EmpService {
-
-    @Resource
-    EmpMapper empMapper;
-    @Resource
-    DeptMapper deptMapper;
-
     @Resource
     EmpRepository empRepository;
 
@@ -43,7 +35,7 @@ public class EmpServiceImpl implements EmpService {
     @Override
     public List<Emp> listEmp(EmpQuery empQuery) {
         Specification<Emp> empSpecification = (root, criteriaQuery, criteriaBuilder) -> getEmpPredicate(root, criteriaBuilder, empQuery);
-        Pageable pageable = PageRequest.of(empQuery.getStart(),empQuery.getLimit());
+        Pageable pageable = PageRequest.of(empQuery.getStart(), empQuery.getLimit());
         Page<Emp> all = empRepository.findAll(empSpecification, pageable);
         return all.getContent();
     }
@@ -59,7 +51,7 @@ public class EmpServiceImpl implements EmpService {
         List<Predicate> predicates = new ArrayList<>();
         if (empQuery.getName() != null && !"".equals(empQuery.getName())) {
             Path<Object> name = root.get("name");
-            Predicate like = criteriaBuilder.like(name.as(String.class), "%"+empQuery.getName()+"%");
+            Predicate like = criteriaBuilder.like(name.as(String.class), "%" + empQuery.getName() + "%");
             predicates.add(like);
         }
         if (empQuery.getStartDate() != null) {
@@ -88,11 +80,11 @@ public class EmpServiceImpl implements EmpService {
 
     @Override
     public void deleteEmp(String ids) {
-        // 接收包含stuId的字符串，并将它分割成字符串数组
+        // 接收包含empId的字符串，并将它分割成字符串数组
         String[] empList = ids.split(",");
-        // 将字符串数组转为List<Intger> 类型
+        // 将字符串数组转为List<Integer> 类型
         List<Integer> LString = new ArrayList<Integer>();
-        for(String str : empList){
+        for (String str : empList) {
             LString.add(new Integer(str));
         }
         empRepository.deleteBatch(LString);
@@ -105,6 +97,6 @@ public class EmpServiceImpl implements EmpService {
 
     @Override
     public void updateEmp(Emp emp) {
-       empRepository.save(emp);
+        empRepository.save(emp);
     }
 }

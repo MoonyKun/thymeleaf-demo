@@ -15,5 +15,4 @@ public interface EmpRepository extends JpaRepository<Emp, Integer>, JpaSpecifica
     @Transactional
     @Query("delete from Emp s where s.empId in (?1)")
     void deleteBatch(List<Integer> ids);
-    void deleteEmpsByEmpIdIn(List<Integer> ids);
 }
