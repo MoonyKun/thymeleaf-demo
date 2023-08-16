@@ -41,6 +41,6 @@ public class Emp implements Serializable {
     private Integer deptId;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "dept_id",name = "dept_id",insertable = false,updatable = false)
+    @JoinColumn(name = "dept_id",referencedColumnName = "dept_id",insertable = false, updatable = false)
     private Dept dept;
 }
