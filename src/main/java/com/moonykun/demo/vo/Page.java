@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * @author Moonykun
+ */
 @Data
 public class Page implements Serializable {
     private Integer page;

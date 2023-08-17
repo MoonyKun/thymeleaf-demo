@@ -13,6 +13,6 @@ public interface EmpRepository extends JpaRepository<Emp, Integer>, JpaSpecifica
     // 这个是通过spring data拼接关键字进行的操作
     @Modifying
     @Transactional
-    @Query("delete from Emp s where s.empId in (?1)")
+    @Query(value = "delete from Emp s where s.empId in (?1)")
     void deleteBatch(List<Integer> ids);
 }

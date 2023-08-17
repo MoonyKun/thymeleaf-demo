@@ -2,6 +2,9 @@ package com.moonykun.demo.vo;
 
 import lombok.Data;
 
+/**
+ * @author Moonykun
+ */
 @Data
 public class UserQuery  extends Page{
 
