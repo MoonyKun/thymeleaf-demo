@@ -5,6 +5,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
+/**
+ * @author Moonykun
+ */
 @Data
 public class EmpQuery extends Page{
     private String name;

@@ -4,6 +4,9 @@ import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ * @author Moonykun
+ */
 @Controller
 public class NotFoundController implements ErrorController {
     @Override

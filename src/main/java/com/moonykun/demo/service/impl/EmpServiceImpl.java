@@ -43,8 +43,7 @@ public class EmpServiceImpl implements EmpService {
     @Override
     public Long countEmp(EmpQuery empQuery) {
         Specification<Emp> empSpecification = (root, criteriaQuery, criteriaBuilder) -> getEmpPredicate(root, criteriaBuilder, empQuery);
-        long count = empRepository.count(empSpecification);
-        return count;
+        return empRepository.count(empSpecification);
     }
 
     private Predicate getEmpPredicate(Root<Emp> root, CriteriaBuilder criteriaBuilder, EmpQuery empQuery) {

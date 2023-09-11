@@ -26,12 +26,6 @@ spring:
       ddl-auto: update #自动更新
     show-sql: true  #日志中显示sql语句
 
-mybatis:
-  mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.moonykun.demo.domain
-  configuration:
-    map-underscore-to-camel-case: true  # 驼峰转换
-
 logging:
   level:
     com.moonykun: debug

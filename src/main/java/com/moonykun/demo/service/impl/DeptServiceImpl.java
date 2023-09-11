@@ -15,6 +15,10 @@ import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Moonykun
+ */
+
 @Service
 public class DeptServiceImpl implements DeptService {
     @Resource
@@ -32,6 +36,18 @@ public class DeptServiceImpl implements DeptService {
         Specification<Dept> deptSpecification = (root, criteriaQuery, criteriaBuilder) -> getPredicate(root, criteriaBuilder, deptQuery);
         deptRepository.count(deptSpecification);
         return null;
+    }
+
+    @Override
+    public void deleteDept(String ids) {
+        // 接收包含empId的字符串，并将它分割成字符串数组
+        String[] deptList = ids.split(",");
+        // 将字符串数组转为List<Integer> 类型
+        List<Integer> lString = new ArrayList<Integer>();
+        for (String str : deptList) {
+            lString.add(new Integer(str));
+        }
+        deptRepository.deleteBatch(lString);
     }
 
     private Predicate getPredicate(Root<Dept> root, CriteriaBuilder criteriaBuilder, DeptQuery deptQuery) {

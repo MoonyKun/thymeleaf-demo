@@ -40,7 +40,6 @@ public class UserServiceImpl implements UserService {
         return all.getContent();
     }
 
-
     @Override
     public Long countUser(UserQuery userQuery) {
         Specification<User> userSpecification = (root, criteriaQuery, criteriaBuilder) -> getPredicate(root, criteriaBuilder, userQuery);

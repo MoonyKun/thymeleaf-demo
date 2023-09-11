@@ -9,6 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * @author Moonykun
+ */
 public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecificationExecutor<User> {
     User getUserByUsername(String username);
 

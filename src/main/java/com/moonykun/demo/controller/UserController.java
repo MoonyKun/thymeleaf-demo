@@ -60,20 +60,19 @@ public class UserController {
         Long userCount = userService.countUser(userQuery);
         return Result.success(userList,userCount);
     }
+
     @DeleteMapping("/delete/{ids}")
     @ResponseBody
     public Result<Object> deleteUser(@PathVariable("ids") String ids) {
         userService.deleteUserByIds(ids);
         return Result.success("删除成功");
     }
-
     @GetMapping("/{id}")
     public String getUser(@PathVariable("id") Integer id, Model model) {
         User user = userService.getUserById(id);
         model.addAttribute("user",user);
         return "user/userEdit";
     }
-
     @PutMapping("/update")
     @ResponseBody
     public Result<Object> updateUser(User user) {

@@ -25,5 +25,4 @@ public class User implements Serializable {
 
     @Column(name = "ch_name")
     private String chName;
-
 }
