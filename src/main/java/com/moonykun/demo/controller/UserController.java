@@ -7,7 +7,6 @@ import com.moonykun.demo.vo.UserQuery;
 import com.wf.captcha.utils.CaptchaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,15 +18,14 @@ import java.util.List;
 /**
  * @author Moonykun
  */
-@Controller
+@RestController
 @RequestMapping("/user")
 public class UserController {
     @Autowired
     UserService userService;
 
-    @ResponseBody
     @PostMapping("/login")
-    public Result login(User param, @RequestParam("captcha") String verCode, HttpServletRequest request, HttpSession httpSession) {
+    public Result<Object> login(User param, @RequestParam("captcha") String verCode, HttpServletRequest request, HttpSession httpSession) {
         User user = userService.login(param);
         // 校验验证码
         if (!CaptchaUtil.ver(verCode, request)) {
@@ -48,12 +46,7 @@ public class UserController {
         }
         return Result.fail("用户名或密码错误");
     }
-    @GetMapping("")
-    public String user() {
-        return "user/userList";
-    }
 
-    @ResponseBody
     @GetMapping("/list")
     public Result<Object> listUser(UserQuery userQuery) {
         List<User> userList = userService.listUser(userQuery);
@@ -62,21 +55,24 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{ids}")
-    @ResponseBody
     public Result<Object> deleteUser(@PathVariable("ids") String ids) {
         userService.deleteUserByIds(ids);
         return Result.success("删除成功");
     }
     @GetMapping("/{id}")
-    public String getUser(@PathVariable("id") Integer id, Model model) {
+    public Result<Object> getUser(@PathVariable("id") Integer id, Model model) {
         User user = userService.getUserById(id);
-        model.addAttribute("user",user);
-        return "user/userEdit";
+        return Result.success(user);
     }
     @PutMapping("/update")
-    @ResponseBody
     public Result<Object> updateUser(User user) {
         userService.updateUser(user);
         return Result.success("修改成功");
+    }
+
+    @GetMapping("/listAllUsers")
+    public Result<Object> listAllUsers() {
+        List<User> userList = userService.listAllUsers();
+        return Result.success(userList);
     }
 }

@@ -98,4 +98,9 @@ public class EmpServiceImpl implements EmpService {
     public void updateEmp(Emp emp) {
         empRepository.save(emp);
     }
+
+    @Override
+    public List<Emp> getAllEmp() {
+        return empRepository.findAll();
+    }
 }

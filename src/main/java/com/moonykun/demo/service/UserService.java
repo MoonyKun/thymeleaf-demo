@@ -20,4 +20,6 @@ public interface UserService {
     User getUserById(Integer id);
 
     void updateUser(User user);
+
+    List<User> listAllUsers();
 }

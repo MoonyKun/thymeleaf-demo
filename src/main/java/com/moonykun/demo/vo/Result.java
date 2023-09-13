@@ -31,6 +31,9 @@ public class Result<T> {
     public static Result<Object> success(Object data, Long count){
         return new Result(0,"success",data,count);
     }
+    public static Result<Object> success(Object data){
+        return new Result(0,"success",data,null);
+    }
 
     public static Result<Object> fail(){
         return new Result(-1,"fail",null,null);

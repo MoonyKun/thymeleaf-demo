@@ -70,6 +70,11 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    @Override
+    public List<User> listAllUsers() {
+        return userRepository.findAll();
+    }
+
     private Predicate getPredicate(Root<User> root, CriteriaBuilder criteriaBuilder, UserQuery userQuery) {
         List<Predicate> predicates = new ArrayList<>();
         if (userQuery.getName() != null && !"".equals(userQuery.getName())) {

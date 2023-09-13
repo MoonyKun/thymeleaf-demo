@@ -5,29 +5,21 @@ import com.moonykun.demo.service.DeptService;
 import com.moonykun.demo.vo.DeptQuery;
 import com.moonykun.demo.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /**
  * @author Moonykun
  */
-@Controller
+@RestController
 @RequestMapping("/dept")
 public class DeptController {
 
     @Autowired
     DeptService deptService;
-    @GetMapping("")
-    public String getDeptList() {
-        return "dept/deptList";
-    }
+
     @GetMapping("/list")
-    @ResponseBody
     public Result<Object> listDept(DeptQuery deptQuery) {
         Long count = deptService.countDeptList(deptQuery);
         List<Dept> deptList = deptService.listDept(deptQuery);
@@ -35,8 +27,8 @@ public class DeptController {
     }
 
     @GetMapping("{ids}")
-    public String deleteDept( @PathVariable("ids") String ids) {
+    public Result<Object> deleteDept(@PathVariable("ids") String ids) {
         deptService.deleteDept(ids);
-        return null;
+        return Result.success("删除成功");
     }
 }
